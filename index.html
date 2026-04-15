@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pilavna Menü</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page">
+    <aside class="sidebar">
+      <div class="menu-badge">☰ Menü</div>
+
+      <nav class="category-nav" id="categoryNav"></nav>
+
+      <div class="sidebar-contact">
+        <div class="sidebar-contact-title">İletişim</div>
+        <div class="sidebar-contact-item">📞 0 539 784 87 58</div>
+        <div class="sidebar-contact-item">📷 @pilavnam</div>
+        <div class="sidebar-contact-item">📍 Fatih / İstanbul</div>
+      </div>
+
+      <div class="sidebar-logo">
+        <img src="images/logo.png" alt="Pilavna Logo" />
+      </div>
+    </aside>
+
+    <main class="content">
+      <header class="content-header">
+        <img src="images/logo.png" alt="Pilavna Logo" class="hero-logo" />
+      </header>
+
+      <section id="menuContainer" class="menu-wrapper"></section>
+
+      <section class="contact-section" id="contact">
+        <div class="contact-section-header">
+          <h2 class="contact-section-title">İletişim</h2>
+        </div>
+
+        <div class="contact-list">
+          <div class="contact-line contact-line-action">
+            <div class="contact-line-main">
+              <span class="contact-line-label">Telefon</span>
+              <span class="contact-line-value">+90 539 784 87 58</span>
+            </div>
+
+            <a
+              href="tel:+905397848758"
+              class="contact-line-icon-link"
+              aria-label="Telefon ile ara"
+            >
+              <img src="images/phone-icon.png" alt="Telefon" class="contact-line-icon-img" />
+            </a>
+          </div>
+
+          <div class="contact-line contact-line-action">
+            <div class="contact-line-main">
+              <span class="contact-line-label">Instagram</span>
+              <span class="contact-line-value">@pilavnam</span>
+            </div>
+
+            <a
+              href="https://instagram.com/pilavnam"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="contact-line-icon-link"
+              aria-label="Instagram sayfasını aç"
+            >
+              <img src="images/instagram-icon.png" alt="Instagram" class="contact-line-icon-img" />
+            </a>
+          </div>
+
+          <div class="contact-line">
+            <div class="contact-line-main">
+              <span class="contact-line-label">Adres</span>
+              <span class="contact-line-value">
+                Silivrikapı Mahallesi, Ramazan Efendi Sokak No: 21/A, Fatih / İstanbul, Türkiye
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <a
+          href="https://wa.me/905397848758"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="whatsapp-box"
+        >
+          <span class="whatsapp-icon">💬</span>
+          <div class="whatsapp-content">
+            <span class="whatsapp-label">WhatsApp</span>
+            <span class="whatsapp-value">Mesaj Gönder</span>
+          </div>
+        </a>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
