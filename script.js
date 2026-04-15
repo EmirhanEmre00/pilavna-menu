@@ -1,4 +1,4 @@
-fetch("menu.json")
+fetch(`menu.json?v=${Date.now()}`)
   .then((response) => response.json())
   .then((data) => {
     const nav = document.getElementById("categoryNav");
