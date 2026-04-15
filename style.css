@@ -14,37 +14,47 @@
 
 * {
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
 html {
   scroll-behavior: smooth;
+  height: 100%;
 }
 
 body {
   margin: 0;
+  min-height: 100dvh;
   font-family: Arial, sans-serif;
   color: var(--text);
   background-color: #f6f1e8;
   background-image: url("images/bg.png");
   background-repeat: repeat;
   background-size: 300px;
+  overflow-x: hidden;
 }
 
 .page {
   max-width: var(--page-max);
   margin: 0 auto;
-  min-height: 100vh;
+  min-height: 100dvh;
   display: grid;
   grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
   gap: 16px;
-  padding: 16px;
-  align-items: start;
+  padding:
+    calc(16px + env(safe-area-inset-top))
+    16px
+    calc(16px + env(safe-area-inset-bottom))
+    16px;
+  align-items: stretch;
 }
 
 .sidebar {
   position: sticky;
-  top: 16px;
-  height: calc(100vh - 32px);
+  top: calc(16px + env(safe-area-inset-top));
+  align-self: start;
+  height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 32px);
+  min-height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 32px);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0)),
     linear-gradient(180deg, #2b2724 0%, #171514 100%);
@@ -81,17 +91,23 @@ body {
     inset 0 1px 0 rgba(255, 255, 255, 0.7);
   margin-bottom: 18px;
   text-align: center;
+  flex-shrink: 0;
 }
 
 .category-nav {
   width: 100%;
+  flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 14px;
   overflow-y: auto;
+  overflow-x: hidden;
   padding-right: 0;
   padding-bottom: 18px;
+  scroll-behavior: smooth;
+  overscroll-behavior: contain;
 }
 
 .category-nav::-webkit-scrollbar {
@@ -126,6 +142,7 @@ body {
   align-items: center;
   justify-content: center;
   text-decoration: none;
+  flex-shrink: 0;
 }
 
 .category-btn:hover,
@@ -161,11 +178,12 @@ body {
 }
 
 .sidebar-contact {
-  margin-top: auto;
   width: 100%;
   padding-top: 10px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin-top: 10px;
   margin-bottom: 10px;
+  flex-shrink: 0;
 }
 
 .sidebar-contact-title {
@@ -188,6 +206,7 @@ body {
   display: flex;
   justify-content: center;
   padding-top: 8px;
+  flex-shrink: 0;
 }
 
 .sidebar-logo img {
@@ -253,6 +272,7 @@ body {
     inset 0 1px 0 rgba(255, 255, 255, 0.55);
   position: relative;
   overflow: hidden;
+  scroll-margin-top: 24px;
 }
 
 .category-section::before,
@@ -388,6 +408,7 @@ body {
   font-size: 16px;
   line-height: 1.45;
   color: var(--text);
+  word-break: break-word;
 }
 
 .whatsapp-box {
@@ -442,6 +463,7 @@ body {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  gap: 12px;
 }
 
 .contact-line-main {
@@ -466,6 +488,7 @@ body {
     0 6px 14px rgba(0, 0, 0, 0.05);
   transition: 0.2s ease;
   text-decoration: none;
+  flex-shrink: 0;
 }
 
 .contact-line-icon-link:hover {
@@ -490,12 +513,17 @@ body {
 
   .page {
     gap: 12px;
-    padding: 12px;
+    padding:
+      calc(12px + env(safe-area-inset-top))
+      12px
+      calc(12px + env(safe-area-inset-bottom))
+      12px;
   }
 
   .sidebar {
-    top: 12px;
-    height: calc(100vh - 24px);
+    top: calc(12px + env(safe-area-inset-top));
+    height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 24px);
+    min-height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 24px);
     border-radius: 28px;
   }
 
@@ -585,12 +613,17 @@ body {
   .page {
     grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
     gap: 10px;
-    padding: 10px;
+    padding:
+      calc(10px + env(safe-area-inset-top))
+      10px
+      calc(10px + env(safe-area-inset-bottom))
+      10px;
   }
 
   .sidebar {
-    top: 10px;
-    height: calc(100svh - 20px);
+    top: calc(10px + env(safe-area-inset-top));
+    height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 20px);
+    min-height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 20px);
     border-radius: 26px;
     padding: 10px 7px 12px;
   }
@@ -736,10 +769,17 @@ body {
 
   .page {
     gap: 8px;
-    padding: 8px;
+    padding:
+      calc(8px + env(safe-area-inset-top))
+      8px
+      calc(8px + env(safe-area-inset-bottom))
+      8px;
   }
 
   .sidebar {
+    top: calc(8px + env(safe-area-inset-top));
+    height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 16px);
+    min-height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 16px);
     border-radius: 24px;
     padding: 8px 6px 10px;
   }
