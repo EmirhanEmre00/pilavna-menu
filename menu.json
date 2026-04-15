@@ -25,15 +25,15 @@
       "name": "Sınırsız Menüler",
       "shortName": "Sınırsız Menüler",
       "items": [
-        {
-          "name": "Sınırsız Pilav Soslu Tavuklu Menü",
-          "price": 130,
-          "description": "Sınırsız Pilav + Soslu Tavuk + Salata"
+                {
+          "name": "Sınırsız Pilav Tiftik Tavuklu Menü",
+          "price": 170,
+          "description": "Sınırsız Pilav + Tiftik Tavuk + Salata"
         },
         {
-          "name": "Sınırsız Pilav Tiftik Tavuklu Menü",
-          "price": 130,
-          "description": "Sınırsız Pilav + Tiftik Tavuk + Salata"
+          "name": "Sınırsız Pilav Soslu Tavuklu Menü",
+          "price": 200,
+          "description": "Sınırsız Pilav + Soslu Tavuk + Salata"
         }
       ]
     },
@@ -41,6 +41,11 @@
       "name": "Tavuklu Pilavlar",
       "shortName": "Tavuklu Pilavlar",
       "items": [
+                {
+          "name": "Sade Pilav",
+          "price": 70,
+          "description": "Tane tane pişirilmiş, tek başına veya yanında tercih edilebilecek sade pilav."
+        },
         {
           "name": "Tavuklu Pilav",
           "price": 100,
@@ -50,11 +55,6 @@
           "name": "1,5 Tavuklu Pilav",
           "price": 150,
           "description": "Daha yoğun tavuk porsiyonu ile hazırlanan ekstra doyurucu tavuklu pilav."
-        },
-        {
-          "name": "Sade Pilav",
-          "price": 70,
-          "description": "Tane tane pişirilmiş, tek başına veya yanında tercih edilebilecek sade pilav."
         }
       ]
     },
@@ -126,32 +126,32 @@
       "items": [
         {
           "name": "Köri Soslu Makarna",
-          "price": 100,
+          "price": 120,
           "description": "Özel makarna, köri sos ile hazırlanır."
         },
         {
           "name": "Acı Soslu Makarna",
-          "price": 100,
+          "price": 120,
           "description": "Hafif acı sos ile hazırlanan makarna."
         },
         {
           "name": "Pestolu Makarna",
-          "price": 100,
+          "price": 120,
           "description": "Pesto sos ile hazırlanan aromatik makarna."
         },
         {
           "name": "Napoliten Soslu Makarna",
-          "price": 100,
+          "price": 120,
           "description": "Domates bazlı napoliten sos ile hazırlanan makarna."
         },
         {
           "name": "Kremalı Mantarlı Makarna",
-          "price": 100,
+          "price": 120,
           "description": "Krema ve mantar ile hazırlanan yumuşak lezzetli makarna."
         },
         {
           "name": "Mac And Cheese Makarna",
-          "price": 100,
+          "price": 120,
           "description": "Yoğun peynir soslu mac and cheese makarna."
         }
       ]
