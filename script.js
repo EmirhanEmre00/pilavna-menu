@@ -3,6 +3,7 @@ fetch("menu.json")
   .then((data) => {
     const nav = document.getElementById("categoryNav");
     const container = document.getElementById("menuContainer");
+    const contactSection = document.getElementById("contact");
 
     nav.innerHTML = "";
     container.innerHTML = "";
@@ -67,7 +68,6 @@ fetch("menu.json")
 
     contactBtn.addEventListener("click", (e) => {
       e.preventDefault();
-      const contactSection = document.getElementById("contact");
       if (!contactSection) return;
 
       contactSection.scrollIntoView({
@@ -75,8 +75,7 @@ fetch("menu.json")
         block: "start"
       });
 
-      buttons.forEach((btn) => btn.classList.remove("active"));
-      contactBtn.classList.add("active");
+      setActiveContact();
     });
 
     nav.appendChild(contactBtn);
@@ -84,11 +83,34 @@ fetch("menu.json")
     const sections = document.querySelectorAll(".category-section");
     const buttons = document.querySelectorAll(".category-btn");
 
+    function scrollActiveButtonIntoView(activeButton) {
+      if (!activeButton) return;
+
+      activeButton.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+        inline: "nearest"
+      });
+    }
+
     function setActiveButton(activeId) {
       buttons.forEach((btn) => {
         btn.classList.toggle("active", btn.dataset.target === activeId);
       });
+
       contactBtn.classList.remove("active");
+
+      const activeButton = [...buttons].find(
+        (btn) => btn.dataset.target === activeId
+      );
+
+      scrollActiveButtonIntoView(activeButton);
+    }
+
+    function setActiveContact() {
+      buttons.forEach((btn) => btn.classList.remove("active"));
+      contactBtn.classList.add("active");
+      scrollActiveButtonIntoView(contactBtn);
     }
 
     const observer = new IntersectionObserver(
@@ -102,11 +124,31 @@ fetch("menu.json")
         }
       },
       {
-        threshold: 0.35
+        root: null,
+        rootMargin: "-15% 0px -55% 0px",
+        threshold: 0.15
       }
     );
 
     sections.forEach((section) => observer.observe(section));
+
+    if (contactSection) {
+      const contactObserver = new IntersectionObserver(
+        (entries) => {
+          const entry = entries[0];
+          if (entry && entry.isIntersecting) {
+            setActiveContact();
+          }
+        },
+        {
+          root: null,
+          rootMargin: "-20% 0px -20% 0px",
+          threshold: 0.2
+        }
+      );
+
+      contactObserver.observe(contactSection);
+    }
 
     if (sections.length > 0) {
       setActiveButton(sections[0].id);
