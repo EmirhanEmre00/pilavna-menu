@@ -80,6 +80,22 @@
       ]
     },
     {
+  "name": "Ciğerli Pilavlar",
+  "shortName": "Ciğerli Pilavlar",
+  "items": [
+    {
+      "name": "Pilav Üstü Ciğer",
+      "price": 120,
+      "description": "Tane tane pilav üzerinde servis edilen ciğer porsiyonu."
+    },
+    {
+      "name": "1,5 Pilav Üstü Ciğer",
+      "price": 180,
+      "description": "Ekstra ciğer porsiyonu ile hazırlanan doyurucu pilav."
+    }
+  ]
+},
+    {
       "name": "Tavuklu Makarnalar",
       "shortName": "Tavuklu Makarnalar",
       "items": [
@@ -187,6 +203,32 @@
         }
       ]
     },
+    {
+  "name": "Ekstra Malzemeler",
+  "shortName": "Ekstra Malzemeler",
+  "items": [
+    {
+      "name": "Ekstra Sos",
+      "price": 30,
+      "description": "Dilediğiniz ekstra sos ilavesi."
+    },
+    {
+      "name": "Ekstra Parmesan Peynir",
+      "price": 30,
+      "description": "Üzerine ekstra parmesan peynir ilavesi."
+    },
+    {
+      "name": "Ekstra Paket Ketçap",
+      "price": 5,
+      "description": "Tek kullanımlık ketçap paketi."
+    },
+    {
+      "name": "Ekstra Paket Turşu",
+      "price": 5,
+      "description": "Tek kullanımlık turşu paketi."
+    }
+  ]
+},
     {
       "name": "İçecekler",
       "shortName": "İçecekler",
