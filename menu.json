@@ -209,22 +209,22 @@
   "items": [
         {
       "name": "Ev Yapımı Zeytinyağlı Yaprak Sarma (250 GR)",
-      "price": 125,
+      "price": 160,
       "description": "Tamamen ev yapımı, zeytinyağlı özel yaprak sarma."
     },
         {
       "name": "Ev Yapımı Zeytinyağlı Yaprak Sarma (500 GR)",
-      "price": 250,
+      "price": 325,
       "description": "Tamamen ev yapımı, zeytinyağlı özel yaprak sarma."
     },
     {
       "name": "Ev Yapımı Zeytinyağlı Yaprak Sarma (750 GR)",
-      "price": 375,
+      "price": 485,
       "description": "Tamamen ev yapımı, zeytinyağlı özel yaprak sarma."
     },
     {
       "name": "Ev Yapımı Zeytinyağlı Yaprak Sarma (1 KG)",
-      "price": 500,
+      "price": 650,
       "description": "Tamamen ev yapımı, zeytinyağlı özel yaprak sarma."
     }
   ]
