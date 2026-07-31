@@ -178,6 +178,17 @@
       ]
     },
     {
+  "name": "Çıtır Tavuklar",
+  "shortName": "Çıtır Tavuklar",
+  "items": [
+    {
+      "name": "Çıtır Tavuk Tabağı",
+      "price": 200,
+      "description": "Soğan halkası + patates kızartması + çıtır tavuk."
+    }
+  ]
+},
+    {
       "name": "Mantılar",
       "shortName": "Mantılar",
       "items": [
