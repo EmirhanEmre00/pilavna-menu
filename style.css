@@ -1464,13 +1464,24 @@ body {
     gap: 8px;
     padding: 7px;
     border-radius: 20px;
+    transition: width .2s ease, margin .2s ease, padding .2s ease, border-radius .2s ease, box-shadow .2s ease;
+  }
+
+  .sidebar.is-pinned {
+    top: 0;
+    width: calc(100% + 18px);
+    margin-inline: -9px;
+    padding: calc(7px + env(safe-area-inset-top)) 7px 8px;
+    border-top: 0;
+    border-radius: 0 0 20px 20px;
+    box-shadow: 0 14px 32px rgba(30, 23, 18, .28), inset 0 -1px 0 rgba(255, 255, 255, .06);
   }
 
   .menu-badge {
-    min-height: 42px;
+    min-height: 50px;
     margin: 0;
-    padding: 0 12px;
-    font-size: 10px;
+    padding: 0 14px;
+    font-size: 12px;
   }
 
   .category-nav {
@@ -1489,8 +1500,8 @@ body {
 
   .category-btn {
     width: auto;
-    min-width: 105px;
-    min-height: 42px;
+    min-width: 130px;
+    min-height: 50px;
     flex: 0 0 auto;
     flex-direction: row;
     gap: 6px;
@@ -1499,7 +1510,8 @@ body {
     scroll-snap-align: start;
   }
 
-  .category-nav-label { font-size: 10px; white-space: nowrap; }
+  .category-nav-index { font-size: 10px; }
+  .category-nav-label { font-size: 12px; white-space: nowrap; }
   .sidebar-contact, .sidebar-logo { display: none; }
   .content { padding-top: 12px; }
 
@@ -1518,6 +1530,7 @@ body {
   .contact-section {
     padding: 23px 17px 10px;
     border-radius: 23px;
+    scroll-margin-top: calc(82px + env(safe-area-inset-top));
   }
 
   .category-header { min-height: 58px; flex-direction: row; align-items: center; gap: 10px; }
@@ -1544,7 +1557,7 @@ body {
 
 @media (max-width: 390px) {
   .menu-badge { padding-inline: 10px; }
-  .category-btn { min-width: 94px; }
+  .category-btn { min-width: 112px; }
   .hero-copy h1 { font-size: 32px; }
   .hero-logo-stage::before { width: 150px; }
   .hero-logo { width: 122px; }

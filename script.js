@@ -2,7 +2,26 @@ const nav = document.getElementById("categoryNav");
 const container = document.getElementById("menuContainer");
 const contactSection = document.getElementById("contact");
 const menuSummary = document.getElementById("menuSummary");
+const sidebar = document.querySelector(".sidebar");
 const priceFormatter = new Intl.NumberFormat("tr-TR", { maximumFractionDigits: 2 });
+const mobileNavMedia = window.matchMedia("(max-width: 680px)");
+let mobileNavFrame = 0;
+
+function syncMobileNavPosition() {
+  sidebar?.classList.toggle("is-pinned", mobileNavMedia.matches && window.scrollY > 18);
+}
+
+function scheduleMobileNavSync() {
+  if (mobileNavFrame) return;
+  mobileNavFrame = window.requestAnimationFrame(() => {
+    syncMobileNavPosition();
+    mobileNavFrame = 0;
+  });
+}
+
+window.addEventListener("scroll", scheduleMobileNavSync, { passive: true });
+mobileNavMedia.addEventListener("change", syncMobileNavPosition);
+syncMobileNavPosition();
 
 async function fetchMenu() {
   const apiResponse = await fetch("/api/menu", { cache: "no-store" });
@@ -128,42 +147,70 @@ function renderMenu(data) {
 
   const sections = [...document.querySelectorAll(".category-section")];
   const buttons = [...document.querySelectorAll(".category-btn")];
+  let currentActiveKey = "";
+  let scrollSpyFrame = 0;
 
   function keepActiveButtonVisible(button) {
     if (!button) return;
-    const targetTop = button.offsetTop - nav.clientHeight / 2 + button.offsetHeight / 2;
+    const navRect = nav.getBoundingClientRect();
+    const buttonRect = button.getBoundingClientRect();
+    const isHorizontal = window.getComputedStyle(nav).flexDirection === "row";
+
+    if (isHorizontal) {
+      const targetLeft = nav.scrollLeft + buttonRect.left - navRect.left - (navRect.width - buttonRect.width) / 2;
+      nav.scrollTo({ left: Math.max(0, targetLeft), behavior: "smooth" });
+      return;
+    }
+
+    const targetTop = nav.scrollTop + buttonRect.top - navRect.top - (navRect.height - buttonRect.height) / 2;
     nav.scrollTo({ top: Math.max(0, targetTop), behavior: "smooth" });
   }
 
   function setActiveButton(activeId) {
+    if (currentActiveKey === activeId) return;
+    currentActiveKey = activeId;
     buttons.forEach((button) => button.classList.toggle("active", button.dataset.target === activeId));
     contactButton.classList.remove("active");
     keepActiveButtonVisible(buttons.find((button) => button.dataset.target === activeId));
   }
 
   function setActiveContact() {
+    if (currentActiveKey === "contact") return;
+    currentActiveKey = "contact";
     buttons.forEach((button) => button.classList.remove("active"));
     contactButton.classList.add("active");
     keepActiveButtonVisible(contactButton);
   }
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      const visibleSection = entries
-        .filter((entry) => entry.isIntersecting)
-        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-      if (visibleSection) setActiveButton(visibleSection.target.id);
-    },
-    { rootMargin: "-15% 0px -55% 0px", threshold: 0.15 }
-  );
-  sections.forEach((section) => observer.observe(section));
+  function updateActiveFromScroll() {
+    const activationLine = mobileNavMedia.matches
+      ? (sidebar?.getBoundingClientRect().bottom || 0) + 16
+      : window.innerHeight * 0.28;
 
-  const contactObserver = new IntersectionObserver(
-    ([entry]) => { if (entry?.isIntersecting) setActiveContact(); },
-    { rootMargin: "-20% 0px -20% 0px", threshold: 0.2 }
-  );
-  if (contactSection) contactObserver.observe(contactSection);
-  setActiveButton(sections[0].id);
+    if (contactSection && contactSection.getBoundingClientRect().top <= activationLine) {
+      setActiveContact();
+      return;
+    }
+
+    let activeSection = sections[0];
+    for (const section of sections) {
+      if (section.getBoundingClientRect().top > activationLine) break;
+      activeSection = section;
+    }
+    setActiveButton(activeSection.id);
+  }
+
+  function scheduleScrollSpy() {
+    if (scrollSpyFrame) return;
+    scrollSpyFrame = window.requestAnimationFrame(() => {
+      updateActiveFromScroll();
+      scrollSpyFrame = 0;
+    });
+  }
+
+  window.addEventListener("scroll", scheduleScrollSpy, { passive: true });
+  mobileNavMedia.addEventListener("change", updateActiveFromScroll);
+  updateActiveFromScroll();
 }
 
 document.querySelector(".sidebar-logo")?.addEventListener("click", () => {
