@@ -39,5 +39,5 @@ test("mobile admin editor uses compact collapsible category cards", async () => 
   assert.match(admin, /class="category-card-body"/);
   assert.match(adminClient, /expandedCategories/);
   assert.match(adminStyles, /\.category-card\.is-collapsed \.category-card-body\s*\{\s*display:\s*none/);
-  assert.match(adminStyles, /\.dashboard-actions \.save-button\s*\{[\s\S]*?position:\s*fixed/);
+  assert.match(adminStyles, /\.dashboard-actions\s*\{[\s\S]*?position:\s*fixed/);
 });
