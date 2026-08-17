@@ -298,12 +298,15 @@ button:disabled { opacity: .35; cursor: not-allowed; }
   .eyebrow { font-size: 10px; letter-spacing: 1.2px; }
   .eyebrow::before { width: 18px; }
   .dashboard-actions {
-    position: fixed; left: 8px; right: 8px; bottom: max(8px, env(safe-area-inset-bottom)); z-index: 45;
-    display: grid; grid-template-columns: .65fr 1.35fr; gap: 8px; width: auto; padding: 8px;
-    background: rgba(255,253,249,.92); border: 1px solid rgba(222,207,192,.92); border-radius: 18px;
-    box-shadow: 0 14px 36px rgba(48,35,24,.2); backdrop-filter: blur(16px);
+    position: static; display: block; width: auto; padding: 0;
+    background: none; border: 0; border-radius: 0; box-shadow: none; backdrop-filter: none;
   }
-  .dashboard-actions .ghost-button, .dashboard-actions .primary-button { min-height: 44px; padding-inline: 10px; font-size: 13px; border-radius: 12px; }
+  .dashboard-actions .ghost-button { min-height: 42px; padding-inline: 14px; font-size: 13px; border-radius: 12px; }
+  .dashboard-actions .save-button {
+    position: fixed; left: 8px; right: 8px; bottom: max(8px, env(safe-area-inset-bottom)); z-index: 45;
+    width: auto; min-height: 54px; padding-inline: 14px; font-size: 14px; border-radius: 16px;
+    box-shadow: 0 14px 36px rgba(48,35,24,.22);
+  }
   .summary-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; margin: 18px 0 22px; }
   .summary-grid article { align-items: flex-start; flex-direction: column; gap: 5px; min-width: 0; padding: 11px 10px; border-radius: 14px; }
   .summary-grid span { font-size: 9px; letter-spacing: .45px; }
