@@ -24,7 +24,19 @@ function createMenuItem(item) {
   const name = document.createElement("h3");
   name.className = "item-name";
   name.textContent = item.name;
-  itemLeft.appendChild(name);
+
+  const leader = document.createElement("span");
+  leader.className = "menu-leader";
+  leader.setAttribute("aria-hidden", "true");
+
+  const price = document.createElement("div");
+  price.className = "price";
+  price.textContent = `${priceFormatter.format(Number(item.price))}₺`;
+
+  const headline = document.createElement("div");
+  headline.className = "menu-item-headline";
+  headline.append(name, leader, price);
+  itemLeft.appendChild(headline);
 
   if (item.description) {
     const description = document.createElement("p");
@@ -33,11 +45,7 @@ function createMenuItem(item) {
     itemLeft.appendChild(description);
   }
 
-  const price = document.createElement("div");
-  price.className = "price";
-  price.textContent = `${priceFormatter.format(Number(item.price))}₺`;
-
-  row.append(itemLeft, price);
+  row.appendChild(itemLeft);
   return row;
 }
 
@@ -54,7 +62,14 @@ function renderMenu(data) {
     const navButton = document.createElement("button");
     navButton.type = "button";
     navButton.className = "category-btn";
-    navButton.textContent = category.shortName || category.name;
+    const navIndex = document.createElement("span");
+    navIndex.className = "category-nav-index";
+    navIndex.setAttribute("aria-hidden", "true");
+    navIndex.textContent = String(index + 1).padStart(2, "0");
+    const navLabel = document.createElement("span");
+    navLabel.className = "category-nav-label";
+    navLabel.textContent = category.shortName || category.name;
+    navButton.append(navIndex, navLabel);
     navButton.dataset.target = sectionId;
     navButton.addEventListener("click", () => {
       document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -68,13 +83,20 @@ function renderMenu(data) {
 
     const header = document.createElement("div");
     header.className = "category-header";
+    const heading = document.createElement("div");
+    heading.className = "category-heading-main";
+    const categoryIndex = document.createElement("span");
+    categoryIndex.className = "category-index";
+    categoryIndex.setAttribute("aria-hidden", "true");
+    categoryIndex.textContent = String(index + 1).padStart(2, "0");
     const title = document.createElement("h2");
     title.className = "category-title";
     title.textContent = category.name;
     const count = document.createElement("span");
     count.className = "category-count";
     count.textContent = `${category.items.length} çeşit`;
-    header.append(title, count);
+    heading.append(categoryIndex, title);
+    header.append(heading, count);
 
     const list = document.createElement("div");
     list.className = "menu-list";
@@ -88,7 +110,14 @@ function renderMenu(data) {
 
   const contactButton = document.createElement("a");
   contactButton.className = "category-btn contact-btn";
-  contactButton.textContent = "İletişim";
+  const contactIcon = document.createElement("span");
+  contactIcon.className = "category-nav-index";
+  contactIcon.setAttribute("aria-hidden", "true");
+  contactIcon.textContent = "✦";
+  const contactLabel = document.createElement("span");
+  contactLabel.className = "category-nav-label";
+  contactLabel.textContent = "İletişim";
+  contactButton.append(contactIcon, contactLabel);
   contactButton.href = "#contact";
   contactButton.addEventListener("click", (event) => {
     event.preventDefault();

@@ -48,10 +48,27 @@
             <span>Kullanıcı adı</span>
             <input id="username" name="username" type="text" autocomplete="username" required maxlength="40">
           </label>
-          <label class="field">
-            <span>Parola</span>
-            <input id="password" name="password" type="password" autocomplete="current-password" required maxlength="200">
-          </label>
+          <div class="field">
+            <label for="password">Parola</label>
+            <div class="password-control">
+              <input id="password" name="password" type="password" autocomplete="current-password" required maxlength="200">
+              <button
+                id="passwordToggle"
+                class="password-toggle"
+                type="button"
+                aria-controls="password"
+                aria-pressed="false"
+                aria-label="Parolayı göster"
+              >
+                <svg class="eye-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6Z" />
+                  <circle cx="12" cy="12" r="2.7" />
+                  <path class="eye-slash" d="m4 4 16 16" />
+                </svg>
+                <span>Göster</span>
+              </button>
+            </div>
+          </div>
 
           <p id="loginError" class="form-error" role="alert" hidden></p>
           <button id="loginButton" class="primary-button" type="submit">Giriş yap</button>
