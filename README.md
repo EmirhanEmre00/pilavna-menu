@@ -2,60 +2,34 @@
 
 Pilavna için mobil uyumlu dijital menü ve parola korumalı yönetim paneli.
 
-## Özellikler
+## Nasıl çalışır?
 
-- Ziyaretçiler için hızlı ve responsive menü
-- Sağ alttaki Pilavna logosundan yönetim paneline geçiş
-- Kategori ve ürün ekleme, silme, düzenleme ve sıralama
-- Değişiklikleri `menu.json` dosyasına kalıcı kaydetme
-- Parolayı düz metin yerine `scrypt` hash olarak saklama
-- `HttpOnly` oturum çerezi, CSRF koruması ve giriş denemesi sınırlama
-- Harici npm paketine ihtiyaç duymayan Node.js sunucusu
+- Ana sayfa menüyü Supabase veritabanından okur.
+- Supabase geçici olarak erişilemezse `menu.json` yedek olarak gösterilir.
+- Yönetici Supabase Auth ile giriş yapar.
+- Veritabanı güvenlik kuralları nedeniyle yalnızca `menu_admins` tablosunda bulunan kullanıcı menüyü değiştirebilir.
+- Proje statik olarak GitHub Pages veya Natro üzerinden yayınlanabilir; çalışan bir Node.js sunucusu gerekmez.
 
-## Yerelde çalıştırma
+## Supabase kurulumu
 
-Node.js 20 veya üzeri gerekir.
+1. Supabase projesinde `supabase/schema.sql` dosyasını SQL Editor üzerinden çalıştırın.
+2. `menu.json` içeriğini `menu_content` tablosundaki `id = 1` kaydının `content` alanına ekleyin.
+3. Authentication > Users bölümünden yönetici kullanıcısını oluşturun.
+4. Kullanıcının UUID değerini `menu_admins.user_id` alanına ekleyin.
+5. `supabase-config.js` içindeki Project URL ve Publishable Key değerlerini kendi projenizle güncelleyin.
 
-```powershell
-npm run admin:set-password -- --username admin
-npm start
-```
+`Publishable Key` web sitesinde bulunabilir. `Secret Key`, eski `service_role` anahtarı ve database parolası hiçbir zaman bu dosyaya veya GitHub'a eklenmemelidir.
 
-İlk komut güvenli bir parola üretir ve yalnızca o anda terminalde gösterir. Ayarlar `.env` dosyasına yazılır; parola burada düz metin olarak tutulmaz.
+## Yönetici bilgileri
 
-- Menü: `http://localhost:3000`
-- Yönetim: `http://localhost:3000/admin`
+Panelde görünen kullanıcı adı `supabase-config.js` içindeki `adminUsername` değeridir. Supabase Auth tarafında kullanılan e-posta kullanıcıya gösterilmez. Parola düz metin olarak repoda tutulmaz; Supabase Auth tarafından yönetilir.
 
-Belirli bir parola kullanmak için:
+Parolayı değiştirmek için Supabase Dashboard > Authentication > Users bölümünden yönetici kullanıcısını açıp yeni parola belirleyin.
 
-```powershell
-npm run admin:set-password -- --username admin --password "EnAz12Karakter!"
-```
-
-## Canlıya alma
-
-Yönetim paneli sunucu tarafında çalıştığı için proje yalnızca GitHub Pages gibi statik bir serviste barındırılamaz. Node.js çalıştıran ve kalıcı disk sunan bir hizmet kullanın.
-
-Canlı ortam değişkenleri:
-
-```text
-PORT=3000
-ADMIN_USERNAME=admin
-ADMIN_PASSWORD_HASH=scrypt:...
-SESSION_SECRET=uzun-rastgele-bir-deger
-NODE_ENV=production
-TRUST_PROXY=true
-MENU_DATA_FILE=/kalici-disk/menu.json
-```
-
-`ADMIN_PASSWORD_HASH` ve `SESSION_SECRET` değerlerini en kolay şekilde yerelde `npm run admin:set-password` ile oluşturup barındırma hizmetinin gizli ortam değişkenlerine ekleyebilirsiniz. `.env` dosyasını GitHub'a yüklemeyin.
-
-Kalıcı disk kullanılmayan sunucularda dosya değişiklikleri yeniden başlatma veya yeni dağıtım sırasında kaybolabilir. Bu nedenle `MENU_DATA_FILE` için kalıcı bir disk yolu tanımlayın.
-
-## Test
+## Yerel kontrol
 
 ```powershell
 npm test
 ```
 
-Yönetici parolasını daha sonra değiştirmek için `npm run admin:set-password` komutunu tekrar çalıştırın ve sunucuyu yeniden başlatın.
+Eski Node sunucusu yalnızca yerel servis ve doğrulama testleri için repoda korunmuştur. Canlı admin paneli doğrudan Supabase kullanır.

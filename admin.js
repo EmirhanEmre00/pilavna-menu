@@ -15,46 +15,99 @@ const categoryCount = document.getElementById("categoryCount");
 const itemCount = document.getElementById("itemCount");
 const saveState = document.getElementById("saveState");
 const toast = document.getElementById("toast");
+const supabaseConfig = window.PILAVNA_SUPABASE;
+const supabaseUrl = supabaseConfig?.url?.replace(/\/$/, "") || "";
+const supabaseKey = supabaseConfig?.publishableKey || "";
+const sessionStorageKey = "pilavna_admin_session";
 
 let menu = null;
-let csrfToken = "";
+let accessToken = "";
+let refreshToken = "";
+let tokenExpiresAt = 0;
 let dirty = false;
 let toastTimer = null;
 
-async function request(url, options = {}) {
+function assertSupabaseConfigured() {
+  if (!supabaseUrl || !supabaseKey || !supabaseConfig?.adminEmail || !supabaseConfig?.adminUsername) {
+    const error = new Error("Yönetim bağlantısı henüz yapılandırılmamış. Site sahibiyle iletişime geçin.");
+    error.code = "SERVICE_UNAVAILABLE";
+    throw error;
+  }
+}
+
+async function request(path, { method = "GET", body, authenticated = false, headers = {} } = {}) {
+  assertSupabaseConfigured();
   let response;
   try {
-    response = await fetch(url, {
-      credentials: "same-origin",
-      ...options,
+    response = await fetch(`${supabaseUrl}${path}`, {
+      method,
+      cache: "no-store",
       headers: {
-        ...(options.body ? { "Content-Type": "application/json" } : {}),
-        ...options.headers
-      }
+        apikey: supabaseKey,
+        Accept: "application/json",
+        ...(authenticated && accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+        ...(body !== undefined ? { "Content-Type": "application/json" } : {}),
+        ...headers
+      },
+      ...(body !== undefined ? { body: JSON.stringify(body) } : {})
     });
   } catch {
-    const error = new Error("Yönetim servisine ulaşılamıyor. Lütfen bağlantınızı kontrol edip tekrar deneyin.");
+    const error = new Error("Yönetim servisine ulaşılamıyor. Bağlantınızı kontrol edip tekrar deneyin.");
     error.code = "SERVICE_UNAVAILABLE";
     throw error;
   }
 
   const contentType = response.headers.get("content-type") || "";
   const isJson = contentType.includes("application/json");
-  const payload = isJson ? await response.json().catch(() => ({})) : {};
-
-  if (!isJson && url.startsWith("/api/")) {
-    const error = new Error("Yönetim servisi bu yayında etkin değil. Site sahibi sunucu dağıtımını tamamlamalıdır.");
-    error.status = response.status;
-    error.code = "SERVICE_UNAVAILABLE";
-    throw error;
-  }
+  const payload = isJson ? await response.json().catch(() => ({})) : null;
 
   if (!response.ok) {
-    const error = new Error(payload.message || "İşlem tamamlanamadı.");
+    const error = new Error(payload?.msg || payload?.message || payload?.error_description || "İşlem tamamlanamadı.");
     error.status = response.status;
     throw error;
   }
   return payload;
+}
+
+function saveSession(payload) {
+  accessToken = payload.access_token;
+  refreshToken = payload.refresh_token;
+  tokenExpiresAt = Date.now() + Number(payload.expires_in || 3600) * 1000;
+  sessionStorage.setItem(sessionStorageKey, JSON.stringify({ accessToken, refreshToken, tokenExpiresAt }));
+}
+
+function clearSession() {
+  accessToken = "";
+  refreshToken = "";
+  tokenExpiresAt = 0;
+  sessionStorage.removeItem(sessionStorageKey);
+}
+
+async function refreshSession() {
+  if (!refreshToken) return false;
+  const payload = await request("/auth/v1/token?grant_type=refresh_token", {
+    method: "POST",
+    body: { refresh_token: refreshToken }
+  });
+  saveSession(payload);
+  return true;
+}
+
+async function restoreSession() {
+  try {
+    const stored = JSON.parse(sessionStorage.getItem(sessionStorageKey) || "null");
+    if (!stored?.accessToken || !stored?.refreshToken) return false;
+    accessToken = stored.accessToken;
+    refreshToken = stored.refreshToken;
+    tokenExpiresAt = Number(stored.tokenExpiresAt || 0);
+
+    if (tokenExpiresAt <= Date.now() + 30_000) await refreshSession();
+    await request("/auth/v1/user", { authenticated: true });
+    return true;
+  } catch {
+    clearSession();
+    return false;
+  }
 }
 
 function setPasswordVisible(visible) {
@@ -229,20 +282,29 @@ loginForm.addEventListener("submit", async (event) => {
   loginButton.disabled = true;
   loginButton.textContent = "Giriş yapılıyor…";
   try {
-    const payload = await request("/api/admin/login", {
+    const enteredUsername = loginForm.elements.username.value.trim();
+    if (enteredUsername !== supabaseConfig?.adminUsername) {
+      const error = new Error("Kullanıcı adı veya parola hatalı.");
+      error.status = 401;
+      throw error;
+    }
+
+    const payload = await request("/auth/v1/token?grant_type=password", {
       method: "POST",
-      body: JSON.stringify({
-        username: loginForm.elements.username.value,
+      body: {
+        email: supabaseConfig.adminEmail,
         password: loginForm.elements.password.value
-      })
+      }
     });
-    csrfToken = payload.csrfToken;
+    saveSession(payload);
     loginForm.reset();
     setPasswordVisible(false);
     await loadMenu();
     showDashboard();
   } catch (error) {
-    loginError.textContent = error.message;
+    loginError.textContent = [400, 401].includes(error.status)
+      ? "Kullanıcı adı veya parola hatalı."
+      : error.message;
     loginError.hidden = false;
   } finally {
     loginButton.disabled = false;
@@ -265,12 +327,15 @@ saveButton.addEventListener("click", async () => {
   saveButton.disabled = true;
   saveButton.textContent = "Kaydediliyor…";
   try {
-    const payload = await request("/api/admin/menu", {
-      method: "PUT",
-      headers: { "X-CSRF-Token": csrfToken },
-      body: JSON.stringify(menu)
+    if (tokenExpiresAt <= Date.now() + 30_000) await refreshSession();
+    const payload = await request("/rest/v1/menu_content?id=eq.1&select=content", {
+      method: "PATCH",
+      authenticated: true,
+      headers: { Prefer: "return=representation" },
+      body: { content: menu }
     });
-    menu = payload.menu;
+    if (!payload?.[0]?.content) throw new Error("Menü kaydedilemedi. Yönetici yetkisini kontrol edin.");
+    menu = payload[0].content;
     renderEditor();
     setDirty(false);
     showToast("Menü başarıyla güncellendi.");
@@ -289,25 +354,31 @@ saveButton.addEventListener("click", async () => {
 
 logoutButton.addEventListener("click", async () => {
   if (dirty && !confirm("Kaydedilmemiş değişiklikler var. Yine de çıkış yapılsın mı?")) return;
-  await request("/api/admin/logout", { method: "POST" }).catch(() => {});
+  await request("/auth/v1/logout", { method: "POST", authenticated: true }).catch(() => {});
   menu = null;
-  csrfToken = "";
+  clearSession();
   setDirty(false);
   showLogin();
 });
 
 async function loadMenu() {
-  menu = await request("/api/menu");
+  const rows = await request("/rest/v1/menu_content?select=content&id=eq.1", {
+    authenticated: Boolean(accessToken)
+  });
+  if (!rows?.[0]?.content) throw new Error("Menü verisi bulunamadı.");
+  menu = rows[0].content;
   renderEditor();
   setDirty(false);
 }
 
 async function initialize() {
   try {
-    const session = await request("/api/admin/session");
-    csrfToken = session.csrfToken;
-    await loadMenu();
-    showDashboard();
+    if (await restoreSession()) {
+      await loadMenu();
+      showDashboard();
+      return;
+    }
+    showLogin();
   } catch (error) {
     showLogin(error.code === "SERVICE_UNAVAILABLE" ? error.message : "");
   }
