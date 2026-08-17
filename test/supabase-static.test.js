@@ -1,0 +1,29 @@
+import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
+import test from "node:test";
+
+const root = new URL("../", import.meta.url);
+
+async function source(path) {
+  return readFile(new URL(path, root), "utf8");
+}
+
+test("public Supabase configuration never contains a privileged key", async () => {
+  const config = await source("supabase-config.js");
+  assert.match(config, /sb_publishable_/);
+  assert.doesNotMatch(config, /sb_secret_|service_role/i);
+});
+
+test("menu and admin pages load Supabase configuration before their application code", async () => {
+  const [index, admin] = await Promise.all([source("index.html"), source("admin.html")]);
+  assert.ok(index.indexOf("supabase-config.js") < index.indexOf("script.js"));
+  assert.ok(admin.indexOf("supabase-config.js") < admin.indexOf("admin.js"));
+});
+
+test("static clients use Supabase instead of the unavailable local admin API", async () => {
+  const [menuClient, adminClient] = await Promise.all([source("script.js"), source("admin.js")]);
+  assert.match(menuClient, /rest\/v1\/menu_content/);
+  assert.match(adminClient, /auth\/v1\/token\?grant_type=password/);
+  assert.match(adminClient, /rest\/v1\/menu_content/);
+  assert.doesNotMatch(adminClient, /\/api\/admin/);
+});

@@ -24,10 +24,29 @@ mobileNavMedia.addEventListener("change", syncMobileNavPosition);
 syncMobileNavPosition();
 
 async function fetchMenu() {
-  const apiResponse = await fetch("/api/menu", { cache: "no-store" });
-  if (apiResponse.ok) return apiResponse.json();
+  const config = window.PILAVNA_SUPABASE;
+  if (config?.url && config?.publishableKey) {
+    try {
+      const apiResponse = await fetch(
+        `${config.url.replace(/\/$/, "")}/rest/v1/menu_content?select=content&id=eq.1`,
+        {
+          cache: "no-store",
+          headers: {
+            apikey: config.publishableKey,
+            Accept: "application/json"
+          }
+        }
+      );
+      if (apiResponse.ok) {
+        const rows = await apiResponse.json();
+        if (rows[0]?.content) return rows[0].content;
+      }
+    } catch (error) {
+      console.warn("Canlı menü verisine ulaşılamadı, yerel menü kullanılacak:", error);
+    }
+  }
 
-  // Statik önizlemelerde menü görünmeye devam eder; düzenleme için Node sunucusu gerekir.
+  // Supabase geçici olarak erişilemezse menü tamamen kaybolmasın.
   const fileResponse = await fetch(`menu.json?v=${Date.now()}`, { cache: "no-store" });
   if (!fileResponse.ok) throw new Error("Menü verisi alınamadı.");
   return fileResponse.json();

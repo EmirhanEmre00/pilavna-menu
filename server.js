@@ -31,6 +31,7 @@ const staticFiles = new Map([
   ["/index.html", "index.html"],
   ["/style.css", "style.css"],
   ["/script.js", "script.js"],
+  ["/supabase-config.js", "supabase-config.js"],
   ["/admin", "admin.html"],
   ["/admin/", "admin.html"],
   ["/admin.html", "admin.html"],
@@ -81,7 +82,7 @@ function parsePort(rawValue) {
 
 function securityHeaders() {
   return {
-    "Content-Security-Policy": "default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'",
+    "Content-Security-Policy": "default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; connect-src 'self' https://ddwoxswosizcrxhuueqv.supabase.co; base-uri 'none'; form-action 'self'; frame-ancestors 'none'",
     "Referrer-Policy": "strict-origin-when-cross-origin",
     "X-Content-Type-Options": "nosniff",
     "X-Frame-Options": "DENY",
