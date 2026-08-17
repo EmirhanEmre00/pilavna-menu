@@ -19,6 +19,7 @@ const supabaseConfig = window.PILAVNA_SUPABASE;
 const supabaseUrl = supabaseConfig?.url?.replace(/\/$/, "") || "";
 const supabaseKey = supabaseConfig?.publishableKey || "";
 const sessionStorageKey = "pilavna_admin_session";
+const expandedCategories = new Set();
 
 let menu = null;
 let accessToken = "";
@@ -142,7 +143,7 @@ function showDashboard() {
 function setDirty(value) {
   dirty = value;
   saveButton.disabled = !dirty;
-  saveState.textContent = dirty ? "Kaydedilmemiş değişiklik" : "Güncel";
+  saveState.textContent = dirty ? "Kaydedilmedi" : "Güncel";
   saveState.closest("article").classList.toggle("is-dirty", dirty);
 }
 
@@ -165,6 +166,8 @@ function renderEditor(focusSelector = "") {
     const fragment = categoryTemplate.content.cloneNode(true);
     const card = fragment.querySelector(".category-card");
     card.dataset.categoryIndex = categoryIndex;
+    const categoryExpanded = expandedCategories.has(categoryIndex);
+    card.classList.toggle("is-collapsed", !categoryExpanded);
     fragment.querySelector(".category-number").textContent = String(categoryIndex + 1).padStart(2, "0");
     fragment.querySelector(".category-heading").textContent = category.name || "Adsız kategori";
     fragment.querySelector(".category-product-count").textContent = `${category.items.length} ürün`;
@@ -176,6 +179,11 @@ function renderEditor(focusSelector = "") {
 
     fragment.querySelector('[data-action="category-up"]').disabled = categoryIndex === 0;
     fragment.querySelector('[data-action="category-down"]').disabled = categoryIndex === menu.categories.length - 1;
+    const toggleButton = fragment.querySelector('[data-action="toggle-category"]');
+    toggleButton.textContent = categoryExpanded ? "−" : "＋";
+    toggleButton.setAttribute("aria-expanded", String(categoryExpanded));
+    toggleButton.setAttribute("aria-label", categoryExpanded ? "Kategori ayrıntılarını kapat" : "Kategori ayrıntılarını aç");
+    toggleButton.title = categoryExpanded ? "Kategori ayrıntılarını kapat" : "Kategori ayrıntılarını aç";
 
     const itemList = fragment.querySelector(".items-list");
     const emptyProducts = fragment.querySelector(".empty-products");
@@ -238,20 +246,38 @@ editor.addEventListener("click", (event) => {
   const action = button.dataset.action;
   const category = menu.categories[categoryIndex];
 
-  if (action === "category-up" && move(menu.categories, categoryIndex, categoryIndex - 1)) {
+  if (action === "toggle-category") {
+    if (expandedCategories.has(categoryIndex)) {
+      expandedCategories.delete(categoryIndex);
+    } else {
+      expandedCategories.clear();
+      expandedCategories.add(categoryIndex);
+    }
+    renderEditor();
+    return;
+  } else if (action === "category-up" && move(menu.categories, categoryIndex, categoryIndex - 1)) {
+    expandedCategories.clear();
+    expandedCategories.add(categoryIndex - 1);
     renderEditor();
   } else if (action === "category-down" && move(menu.categories, categoryIndex, categoryIndex + 1)) {
+    expandedCategories.clear();
+    expandedCategories.add(categoryIndex + 1);
     renderEditor();
   } else if (action === "delete-category") {
     if (!confirm(`“${category.name || "Adsız kategori"}” kategorisi ve içindeki ürünler silinsin mi?`)) return;
     menu.categories.splice(categoryIndex, 1);
+    expandedCategories.clear();
     renderEditor();
   } else if (action === "add-item") {
     category.items.push({ name: "Yeni ürün", price: 0, description: "" });
+    expandedCategories.clear();
+    expandedCategories.add(categoryIndex);
     renderEditor(`[data-category-index="${categoryIndex}"] .item-editor:last-child [data-field="item-name"]`);
   } else if (action === "item-up" && move(category.items, itemIndex, itemIndex - 1)) {
+    expandedCategories.add(categoryIndex);
     renderEditor();
   } else if (action === "item-down" && move(category.items, itemIndex, itemIndex + 1)) {
+    expandedCategories.add(categoryIndex);
     renderEditor();
   } else if (action === "delete-item") {
     const item = category.items[itemIndex];
@@ -266,6 +292,8 @@ editor.addEventListener("click", (event) => {
 
 addCategoryButton.addEventListener("click", () => {
   menu.categories.push({ name: "Yeni kategori", shortName: "Yeni kategori", items: [] });
+  expandedCategories.clear();
+  expandedCategories.add(menu.categories.length - 1);
   renderEditor('.category-card:last-child [data-field="category-name"]');
   setDirty(true);
 });
