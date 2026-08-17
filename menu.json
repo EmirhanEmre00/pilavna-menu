@@ -1,0 +1,341 @@
+{
+  "categories": [
+    {
+      "name": "Avantajlı Menüler",
+      "shortName": "Avantajlı Menüler",
+      "items": [
+        {
+          "name": "Öğrenci Menü",
+          "price": 100,
+          "description": "Tavuklu Pilav + Açık ayran"
+        },
+        {
+          "name": "Sporcu Pilav Menü",
+          "price": 220,
+          "description": "Tavuklu Pilav (200 gr tavuk) + Açık ayran"
+        },
+        {
+          "name": "Sporcu Soslu Pilav Menü",
+          "price": 270,
+          "description": "Soslu Tavuklu Pilav (200 gr tavuk) + Açık ayran"
+        },
+        {
+          "name": "Sporcu Makarna Menü",
+          "price": 320,
+          "description": "Dilediğiniz Soslu Tavuklu Makarna (200 gr tavuk) + Açık ayran"
+        }
+      ]
+    },
+    {
+      "name": "Sınırsız Menüler",
+      "shortName": "Sınırsız Menüler",
+      "items": [
+        {
+          "name": "Sınırsız Pilav Tiftik Tavuklu Menü",
+          "price": 200,
+          "description": "Sınırsız Pilav + Tiftik Tavuk + Salata"
+        },
+        {
+          "name": "Sınırsız Pilav Soslu Tavuklu Menü",
+          "price": 250,
+          "description": "Sınırsız Pilav + Soslu Tavuk + Salata"
+        }
+      ]
+    },
+    {
+      "name": "Tavuklu Pilavlar",
+      "shortName": "Tavuklu Pilavlar",
+      "items": [
+        {
+          "name": "Sade Pilav",
+          "price": 90,
+          "description": "Tane tane pişirilmiş, tek başına veya yanında tercih edilebilecek sade pilav."
+        },
+        {
+          "name": "Tavuklu Pilav",
+          "price": 120,
+          "description": "Tereyağlı pilav üzerinde tavuk parçalarıyla hazırlanan klasik lezzet."
+        },
+        {
+          "name": "1,5 Tavuklu Pilav",
+          "price": 180,
+          "description": "Daha yoğun tavuk porsiyonu ile hazırlanan ekstra doyurucu tavuklu pilav."
+        }
+      ]
+    },
+    {
+      "name": "Tavuklu Soslu Pilavlar",
+      "shortName": "Tavuklu Soslu Pilavlar",
+      "items": [
+        {
+          "name": "Pilav Üstü Körili Tavuk",
+          "price": 200,
+          "description": "Pilav üzerinde özel köri sos ile hazırlanmış tavuk."
+        },
+        {
+          "name": "Pilav Üstü Acı Soslu Tavuk",
+          "price": 200,
+          "description": "Pilav üzerinde hafif acı sos ile servis edilen tavuk."
+        },
+        {
+          "name": "Pilav Üstü Barbekü Soslu Tavuk",
+          "price": 200,
+          "description": "Pilav üzerinde barbekü sos ile lezzetlendirilmiş tavuk."
+        }
+      ]
+    },
+    {
+      "name": "Ciğerli Pilavlar",
+      "shortName": "Ciğerli Pilavlar",
+      "items": [
+        {
+          "name": "Pilav Üstü Ciğer",
+          "price": 120,
+          "description": "Tane tane pilav üzerinde servis edilen ciğer porsiyonu."
+        },
+        {
+          "name": "1,5 Pilav Üstü Ciğer",
+          "price": 180,
+          "description": "Ekstra ciğer porsiyonu ile hazırlanan doyurucu pilav."
+        }
+      ]
+    },
+    {
+      "name": "Tavuklu Makarnalar",
+      "shortName": "Tavuklu Makarnalar",
+      "items": [
+        {
+          "name": "Köri Soslu Tavuklu Makarna",
+          "price": 220,
+          "description": "Tavuklu özel makarna, köri sos ile."
+        },
+        {
+          "name": "Acı Soslu Tavuklu Makarna",
+          "price": 220,
+          "description": "Tavuklu makarna, hafif acı sos ile."
+        },
+        {
+          "name": "Barbekü Soslu Tavuklu Makarna",
+          "price": 220,
+          "description": "Tavuk eşliğinde barbekü soslu makarna."
+        },
+        {
+          "name": "Mac And Cheese Tavuklu Makarna",
+          "price": 220,
+          "description": "Tavuk eşliğinde mac and cheese makarna."
+        },
+        {
+          "name": "Pestolu Tavuklu Makarna",
+          "price": 220,
+          "description": "Tavuk eşliğinde pesto soslu makarna."
+        },
+        {
+          "name": "Kremalı Mantarlı Tavuklu Makarna",
+          "price": 220,
+          "description": "Krema ve mantar ile zenginleştirilmiş tavuklu makarna."
+        },
+        {
+          "name": "Napoliten Soslu Tavuklu Makarna",
+          "price": 220,
+          "description": "Tavuk eşliğinde napoliten soslu makarna."
+        }
+      ]
+    },
+    {
+      "name": "Soslu Makarnalar",
+      "shortName": "Soslu Makarnalar",
+      "items": [
+        {
+          "name": "Köri Soslu Makarna",
+          "price": 170,
+          "description": "Özel makarna, köri sos ile hazırlanır."
+        },
+        {
+          "name": "Acı Soslu Makarna",
+          "price": 170,
+          "description": "Hafif acı sos ile hazırlanan makarna."
+        },
+        {
+          "name": "Pestolu Makarna",
+          "price": 170,
+          "description": "Pesto sos ile hazırlanan aromatik makarna."
+        },
+        {
+          "name": "Napoliten Soslu Makarna",
+          "price": 170,
+          "description": "Domates bazlı napoliten sos ile hazırlanan makarna."
+        },
+        {
+          "name": "Kremalı Mantarlı Makarna",
+          "price": 170,
+          "description": "Krema ve mantar ile hazırlanan yumuşak lezzetli makarna."
+        },
+        {
+          "name": "Mac And Cheese Makarna",
+          "price": 170,
+          "description": "Yoğun peynir soslu mac and cheese makarna."
+        }
+      ]
+    },
+    {
+      "name": "Çıtır Tavuklar",
+      "shortName": "Çıtır Tavuklar",
+      "items": [
+        {
+          "name": "Çıtır Tavuk Tabağı",
+          "price": 200,
+          "description": "Soğan halkası + patates kızartması + çıtır tavuk."
+        }
+      ]
+    },
+    {
+      "name": "Mantılar",
+      "shortName": "Mantılar",
+      "items": [
+        {
+          "name": "Yoğurtlu Mantı",
+          "price": 250,
+          "description": "Sarımsaklı yoğurt ve sos ile servis edilen klasik mantı."
+        },
+        {
+          "name": "Köri Soslu Mantı",
+          "price": 250,
+          "description": "Köri sos ile farklılaştırılmış özel mantı."
+        },
+        {
+          "name": "Acı Soslu Mantı",
+          "price": 250,
+          "description": "Hafif acı sos ile servis edilen mantı."
+        },
+        {
+          "name": "Pesto Soslu Mantı",
+          "price": 250,
+          "description": "Pesto sos ile hazırlanan farklı lezzette mantı."
+        },
+        {
+          "name": "Kremalı Mantarlı Mantı",
+          "price": 250,
+          "description": "Krema ve mantar ile zenginleştirilmiş mantı."
+        }
+      ]
+    },
+    {
+      "name": "Ev Yapımı Yaprak Sarmalar",
+      "shortName": "Yaprak Sarmalar",
+      "items": [
+        {
+          "name": "Ev Yapımı Zeytinyağlı Yaprak Sarma (250 GR)",
+          "price": 160,
+          "description": "Tamamen ev yapımı, zeytinyağlı özel yaprak sarma."
+        },
+        {
+          "name": "Ev Yapımı Zeytinyağlı Yaprak Sarma (500 GR)",
+          "price": 325,
+          "description": "Tamamen ev yapımı, zeytinyağlı özel yaprak sarma."
+        },
+        {
+          "name": "Ev Yapımı Zeytinyağlı Yaprak Sarma (750 GR)",
+          "price": 485,
+          "description": "Tamamen ev yapımı, zeytinyağlı özel yaprak sarma."
+        },
+        {
+          "name": "Ev Yapımı Zeytinyağlı Yaprak Sarma (1 KG)",
+          "price": 650,
+          "description": "Tamamen ev yapımı, zeytinyağlı özel yaprak sarma."
+        }
+      ]
+    },
+    {
+      "name": "Ekstra Malzemeler",
+      "shortName": "Ekstra Malzemeler",
+      "items": [
+        {
+          "name": "Ekstra Sos",
+          "price": 30,
+          "description": "Dilediğiniz ekstra sos ilavesi."
+        },
+        {
+          "name": "Ekstra Parmesan Peynir",
+          "price": 30,
+          "description": "Üzerine ekstra parmesan peynir ilavesi."
+        },
+        {
+          "name": "Ekstra Paket Ketçap",
+          "price": 5,
+          "description": "Tek kullanımlık ketçap paketi."
+        },
+        {
+          "name": "Ekstra Paket Turşu",
+          "price": 5,
+          "description": "Tek kullanımlık turşu paketi."
+        }
+      ]
+    },
+    {
+      "name": "İçecekler",
+      "shortName": "İçecekler",
+      "items": [
+        {
+          "name": "Büyük Ayran",
+          "price": 40,
+          "description": "Büyük boy serinletici ayran."
+        },
+        {
+          "name": "Küçük Ayran",
+          "price": 30,
+          "description": "Küçük boy ayran."
+        },
+        {
+          "name": "Açık Ayran",
+          "price": 50,
+          "description": "Günlük hazırlanan açık ayran."
+        },
+        {
+          "name": "Acılı Ayran",
+          "price": 50,
+          "description": "Baharat dokunuşlu acılı ayran."
+        },
+        {
+          "name": "Ekşi Ayran",
+          "price": 50,
+          "description": "Daha yoğun ve ekşi aromalı ayran."
+        },
+        {
+          "name": "Yayık Ayran",
+          "price": 50,
+          "description": "Geleneksel lezzette yayık ayran."
+        },
+        {
+          "name": "Naneli Ayran",
+          "price": 50,
+          "description": "Nane aromasıyla ferahlatılmış ayran."
+        },
+        {
+          "name": "Kutu İçecekler",
+          "price": 70,
+          "description": "Soğuk servis edilen kutu içecek çeşitleri."
+        },
+        {
+          "name": "Şişe İçecekler",
+          "price": 50,
+          "description": "Şişe meşrubat çeşitleri."
+        },
+        {
+          "name": "Meyveli Soda",
+          "price": 30,
+          "description": "Ferahlatıcı meyve aromalı soda."
+        },
+        {
+          "name": "Sade Soda",
+          "price": 20,
+          "description": "Klasik sade soda."
+        },
+        {
+          "name": "Su",
+          "price": 15,
+          "description": "Soğuk içme suyu."
+        }
+      ]
+    }
+  ]
+}

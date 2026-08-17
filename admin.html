@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Pilavna | Menü Yönetimi</title>
+  <link rel="icon" href="images/favicon.png">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <div class="admin-shell">
+    <header class="admin-header">
+      <a class="brand-link" href="/" aria-label="Menüye dön">
+        <img src="images/logo.png" alt="Pilavna">
+        <span>
+          <strong>Pilavna</strong>
+          <small>Menü yönetimi</small>
+        </span>
+      </a>
+      <a class="back-link" href="/">
+        <span aria-hidden="true">←</span>
+        Menüyü görüntüle
+      </a>
+    </header>
+
+    <main>
+      <section id="loginView" class="login-layout" aria-labelledby="loginTitle">
+        <div class="login-copy">
+          <span class="eyebrow">Yönetim paneli</span>
+          <h1 id="loginTitle">Menünüzü birkaç dakikada güncelleyin.</h1>
+          <p>Kategorileri ve ürünleri ekleyin, sıralayın; açıklama ve fiyatları tek ekrandan düzenleyin.</p>
+          <div class="feature-list" aria-label="Panel özellikleri">
+            <span><b>✓</b> Güvenli yönetici oturumu</span>
+            <span><b>✓</b> Anında menü güncelleme</span>
+            <span><b>✓</b> Telefon ve bilgisayarda kullanım</span>
+          </div>
+        </div>
+
+        <form id="loginForm" class="login-card">
+          <div class="login-logo-wrap">
+            <img src="images/logo.png" alt="" class="login-logo">
+          </div>
+          <h2>Hoş geldiniz</h2>
+          <p>Devam etmek için yönetici bilgilerinizi girin.</p>
+
+          <label class="field">
+            <span>Kullanıcı adı</span>
+            <input id="username" name="username" type="text" autocomplete="username" required maxlength="40">
+          </label>
+          <label class="field">
+            <span>Parola</span>
+            <input id="password" name="password" type="password" autocomplete="current-password" required maxlength="200">
+          </label>
+
+          <p id="loginError" class="form-error" role="alert" hidden></p>
+          <button id="loginButton" class="primary-button" type="submit">Giriş yap</button>
+        </form>
+      </section>
+
+      <section id="dashboardView" class="dashboard" hidden>
+        <div class="dashboard-heading">
+          <div>
+            <span class="eyebrow">Canlı menü</span>
+            <h1>Menü düzenleyici</h1>
+            <p>Yaptığınız değişiklikler yalnızca “Değişiklikleri kaydet” düğmesine bastığınızda yayınlanır.</p>
+          </div>
+          <div class="dashboard-actions">
+            <button id="logoutButton" class="ghost-button" type="button">Çıkış</button>
+            <button id="saveButton" class="primary-button save-button" type="button" disabled>
+              <span aria-hidden="true">✓</span>
+              Değişiklikleri kaydet
+            </button>
+          </div>
+        </div>
+
+        <div class="summary-grid" aria-label="Menü özeti">
+          <article>
+            <span>Kategori</span>
+            <strong id="categoryCount">0</strong>
+          </article>
+          <article>
+            <span>Ürün</span>
+            <strong id="itemCount">0</strong>
+          </article>
+          <article class="save-state-card">
+            <span>Durum</span>
+            <strong id="saveState">Güncel</strong>
+          </article>
+        </div>
+
+        <div class="editor-toolbar">
+          <div>
+            <h2>Kategoriler ve ürünler</h2>
+            <p>Sıralama oklarını kullanarak menüdeki görünüm sırasını değiştirebilirsiniz.</p>
+          </div>
+          <button id="addCategoryButton" class="secondary-button" type="button">
+            <span aria-hidden="true">＋</span>
+            Yeni kategori
+          </button>
+        </div>
+
+        <div id="editor" class="editor" aria-live="polite"></div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+  <template id="categoryTemplate">
+    <article class="category-card">
+      <div class="category-card-header">
+        <div class="category-identity">
+          <span class="category-number"></span>
+          <div>
+            <h3 class="category-heading"></h3>
+            <span class="category-product-count"></span>
+          </div>
+        </div>
+        <div class="row-actions" aria-label="Kategori işlemleri">
+          <button type="button" class="icon-button" data-action="category-up" title="Yukarı taşı" aria-label="Kategoriyi yukarı taşı">↑</button>
+          <button type="button" class="icon-button" data-action="category-down" title="Aşağı taşı" aria-label="Kategoriyi aşağı taşı">↓</button>
+          <button type="button" class="icon-button danger" data-action="delete-category" title="Kategoriyi sil" aria-label="Kategoriyi sil">×</button>
+        </div>
+      </div>
+
+      <div class="category-fields">
+        <label class="field">
+          <span>Kategori adı</span>
+          <input type="text" data-field="category-name" required maxlength="80">
+        </label>
+        <label class="field">
+          <span>Menüdeki kısa adı</span>
+          <input type="text" data-field="category-short-name" required maxlength="40">
+        </label>
+      </div>
+
+      <div class="items-heading">
+        <span>Ürünler</span>
+        <button type="button" class="text-button" data-action="add-item">＋ Ürün ekle</button>
+      </div>
+      <div class="items-list"></div>
+      <div class="empty-products" hidden>Bu kategoride henüz ürün yok.</div>
+    </article>
+  </template>
+
+  <template id="itemTemplate">
+    <div class="item-editor">
+      <div class="item-editor-topline">
+        <span class="item-number"></span>
+        <div class="row-actions" aria-label="Ürün işlemleri">
+          <button type="button" class="mini-button" data-action="item-up" title="Yukarı taşı" aria-label="Ürünü yukarı taşı">↑</button>
+          <button type="button" class="mini-button" data-action="item-down" title="Aşağı taşı" aria-label="Ürünü aşağı taşı">↓</button>
+          <button type="button" class="mini-button danger" data-action="delete-item" title="Ürünü sil" aria-label="Ürünü sil">Sil</button>
+        </div>
+      </div>
+      <div class="item-fields">
+        <label class="field item-name-field">
+          <span>Ürün adı</span>
+          <input type="text" data-field="item-name" required maxlength="120">
+        </label>
+        <label class="field price-field">
+          <span>Fiyat (₺)</span>
+          <input type="number" data-field="item-price" required min="0" max="1000000" step="0.01" inputmode="decimal">
+        </label>
+        <label class="field description-field">
+          <span>Açıklama</span>
+          <textarea data-field="item-description" rows="2" maxlength="300"></textarea>
+        </label>
+      </div>
+    </div>
+  </template>
+
+  <noscript>Yönetim panelini kullanmak için JavaScript'i etkinleştirin.</noscript>
+  <script src="admin.js"></script>
+</body>
+</html>

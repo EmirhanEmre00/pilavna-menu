@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  />
+  <title>Pilavna Menü</title>
+  <link rel="icon" href="images/favicon.png">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page">
+    <aside class="sidebar">
+      <div class="menu-badge">☰ Menü</div>
+
+      <nav class="category-nav" id="categoryNav"></nav>
+
+      <div class="sidebar-contact">
+        <div class="sidebar-contact-title">İletişim</div>
+        <div class="sidebar-contact-item">📞 0 501 546 9558</div>
+        <div class="sidebar-contact-item">📷 @pilavnam</div>
+        <div class="sidebar-contact-item">🎵 @pilavnam</div>
+        <div class="sidebar-contact-item">📍 Fatih / İstanbul</div>
+      </div>
+
+      <div class="sidebar-logo">
+        <img src="images/logo.png" alt="Pilavna Logo" />
+      </div>
+    </aside>
+
+    <main class="content">
+      <header class="content-header">
+        <div class="hero-card">
+          <div class="hero-copy">
+            <span class="hero-kicker">Fatih’in sıcak lezzet durağı</span>
+            <h1>Hem pilav,<br><em>hem makarna.</em></h1>
+            <p>Tane tane pilavlar, bol soslu makarnalar ve her gün taze hazırlanan doyurucu tabaklar.</p>
+            <div class="hero-meta">
+              <span><b></b> Her gün taze</span>
+              <span id="menuSummary">Menü yükleniyor…</span>
+            </div>
+          </div>
+          <div class="hero-logo-stage">
+            <span class="hero-orbit" aria-hidden="true"></span>
+            <img src="images/logo-light.png" alt="Pilavna — Hem pilav hem makarna" class="hero-logo" />
+          </div>
+        </div>
+      </header>
+
+      <section id="menuContainer" class="menu-wrapper" aria-live="polite">
+        <div class="menu-loading">
+          <span class="loading-mark" aria-hidden="true"></span>
+          Menü hazırlanıyor…
+        </div>
+      </section>
+
+      <section class="contact-section" id="contact">
+        <div class="contact-section-header">
+          <h2 class="contact-section-title">İletişim</h2>
+        </div>
+
+        <div class="contact-list">
+          <div class="contact-line contact-line-action">
+            <div class="contact-line-main">
+              <span class="contact-line-label">Telefon</span>
+              <span class="contact-line-value">+90 501 546 9558</span>
+            </div>
+
+            <a
+              href="tel:+905015469558"
+              class="contact-line-icon-link"
+              aria-label="Telefon ile ara"
+            >
+              <img
+                src="images/phone-icon.png"
+                alt="Telefon"
+                class="contact-line-icon-img"
+              />
+            </a>
+          </div>
+
+          <div class="contact-line contact-line-action">
+            <div class="contact-line-main">
+              <span class="contact-line-label">Instagram</span>
+              <span class="contact-line-value">@pilavnam</span>
+            </div>
+
+            <a
+              href="https://instagram.com/pilavnam"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="contact-line-icon-link"
+              aria-label="Instagram sayfasını aç"
+            >
+              <img
+                src="images/instagram-icon.png"
+                alt="Instagram"
+                class="contact-line-icon-img"
+              />
+            </a>
+          </div>
+
+          <div class="contact-line contact-line-action">
+            <div class="contact-line-main">
+              <span class="contact-line-label">TikTok</span>
+              <span class="contact-line-value">@pilavnam</span>
+            </div>
+
+            <a
+              href="https://www.tiktok.com/@pilavnam"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="contact-line-icon-link"
+              aria-label="TikTok sayfasını aç"
+            >
+              <img
+                src="images/tiktok-icon.png"
+                alt="TikTok"
+                class="contact-line-icon-img"
+              />
+            </a>
+          </div>
+
+          <div class="contact-line">
+            <div class="contact-line-main">
+              <span class="contact-line-label">Adres</span>
+              <span class="contact-line-value">
+                Silivrikapı Mahallesi, Ramazan Efendi Sokak No: 21/A, Fatih / İstanbul, Türkiye
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <a
+          href="https://wa.me/905015469558"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="whatsapp-box"
+        >
+          <span class="whatsapp-icon">💬</span>
+          <div class="whatsapp-content">
+            <span class="whatsapp-label">WhatsApp</span>
+            <span class="whatsapp-value">Mesaj Gönder</span>
+          </div>
+        </a>
+      </section>
+
+      <footer class="site-footer">
+        <img src="images/logo.png" alt="" />
+        <div>
+          <strong>Afiyet olsun.</strong>
+          <span>Pilavna · Fatih / İstanbul</span>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <a class="admin-fab" href="/admin" aria-label="Menü yönetim panelini aç" title="Menü yönetimi">
+    <img src="images/logo.png" alt="" />
+    <span class="admin-lock" aria-hidden="true">
+      <svg viewBox="0 0 24 24" focusable="false">
+        <path d="M7.5 10V7.7a4.5 4.5 0 0 1 9 0V10m-10 0h11a1.5 1.5 0 0 1 1.5 1.5v7A1.5 1.5 0 0 1 17.5 20h-11A1.5 1.5 0 0 1 5 18.5v-7A1.5 1.5 0 0 1 6.5 10Z" />
+      </svg>
+    </span>
+  </a>
+
+  <script src="script.js"></script>
+</body>
+</html>
