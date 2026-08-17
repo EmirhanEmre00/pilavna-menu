@@ -112,7 +112,7 @@ button { cursor: pointer; }
 
 .field { display: grid; gap: 8px; }
 .field + .field { margin-top: 17px; }
-.field > span { color: #554e48; font-size: 13px; font-weight: 800; }
+.field > span, .field > label { color: #554e48; font-size: 13px; font-weight: 800; }
 .field input, .field textarea {
   width: 100%; min-width: 0; padding: 13px 14px; color: var(--ink); background: #fff;
   border: 1px solid #dfd1c2; border-radius: 13px; outline: 0; resize: vertical;
@@ -121,6 +121,58 @@ button { cursor: pointer; }
 .field input:focus, .field textarea:focus {
   border-color: var(--accent); box-shadow: 0 0 0 4px rgba(216,137,60,.13);
 }
+
+.password-control {
+  position: relative;
+  display: block;
+  color: inherit !important;
+  font-size: inherit !important;
+  font-weight: inherit !important;
+}
+
+.password-control input { padding-right: 104px; }
+
+.password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 7px;
+  display: inline-flex;
+  min-width: 86px;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 0 10px;
+  color: #6d5a49;
+  background: #faf4ec;
+  border: 1px solid #ead9c8;
+  border-radius: 10px;
+  transform: translateY(-50%);
+  transition: color .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+
+.password-toggle:hover,
+.password-toggle:focus-visible {
+  color: var(--accent-dark);
+  background: #fff8ef;
+  border-color: #dfa96f;
+  box-shadow: 0 5px 14px rgba(171, 100, 37, .12);
+  outline: 0;
+}
+
+.password-toggle .eye-icon {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.password-toggle .eye-slash { opacity: 0; }
+.password-toggle[aria-pressed="true"] .eye-slash { opacity: 1; }
+.password-toggle > span { font-size: 12px; font-weight: 850; }
 
 .form-error {
   margin: 16px 0 0 !important; padding: 11px 13px; color: #8f2e2e !important;

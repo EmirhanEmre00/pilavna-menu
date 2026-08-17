@@ -3,6 +3,8 @@ const dashboardView = document.getElementById("dashboardView");
 const loginForm = document.getElementById("loginForm");
 const loginButton = document.getElementById("loginButton");
 const loginError = document.getElementById("loginError");
+const passwordInput = document.getElementById("password");
+const passwordToggle = document.getElementById("passwordToggle");
 const logoutButton = document.getElementById("logoutButton");
 const saveButton = document.getElementById("saveButton");
 const addCategoryButton = document.getElementById("addCategoryButton");
@@ -20,21 +22,46 @@ let dirty = false;
 let toastTimer = null;
 
 async function request(url, options = {}) {
-  const response = await fetch(url, {
-    credentials: "same-origin",
-    ...options,
-    headers: {
-      ...(options.body ? { "Content-Type": "application/json" } : {}),
-      ...options.headers
-    }
-  });
-  const payload = await response.json().catch(() => ({}));
+  let response;
+  try {
+    response = await fetch(url, {
+      credentials: "same-origin",
+      ...options,
+      headers: {
+        ...(options.body ? { "Content-Type": "application/json" } : {}),
+        ...options.headers
+      }
+    });
+  } catch {
+    const error = new Error("Yönetim servisine ulaşılamıyor. Lütfen bağlantınızı kontrol edip tekrar deneyin.");
+    error.code = "SERVICE_UNAVAILABLE";
+    throw error;
+  }
+
+  const contentType = response.headers.get("content-type") || "";
+  const isJson = contentType.includes("application/json");
+  const payload = isJson ? await response.json().catch(() => ({})) : {};
+
+  if (!isJson && url.startsWith("/api/")) {
+    const error = new Error("Yönetim servisi bu yayında etkin değil. Site sahibi sunucu dağıtımını tamamlamalıdır.");
+    error.status = response.status;
+    error.code = "SERVICE_UNAVAILABLE";
+    throw error;
+  }
+
   if (!response.ok) {
     const error = new Error(payload.message || "İşlem tamamlanamadı.");
     error.status = response.status;
     throw error;
   }
   return payload;
+}
+
+function setPasswordVisible(visible) {
+  passwordInput.type = visible ? "text" : "password";
+  passwordToggle.setAttribute("aria-pressed", String(visible));
+  passwordToggle.setAttribute("aria-label", visible ? "Parolayı gizle" : "Parolayı göster");
+  passwordToggle.querySelector("span").textContent = visible ? "Gizle" : "Göster";
 }
 
 function showToast(message, type = "success") {
@@ -50,6 +77,7 @@ function showLogin(message = "") {
   loginView.hidden = false;
   loginError.textContent = message;
   loginError.hidden = !message;
+  setPasswordVisible(false);
   document.getElementById("username").focus();
 }
 
@@ -189,6 +217,12 @@ addCategoryButton.addEventListener("click", () => {
   setDirty(true);
 });
 
+passwordToggle.addEventListener("click", () => {
+  const visible = passwordToggle.getAttribute("aria-pressed") !== "true";
+  setPasswordVisible(visible);
+  passwordInput.focus({ preventScroll: true });
+});
+
 loginForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   loginError.hidden = true;
@@ -204,6 +238,7 @@ loginForm.addEventListener("submit", async (event) => {
     });
     csrfToken = payload.csrfToken;
     loginForm.reset();
+    setPasswordVisible(false);
     await loadMenu();
     showDashboard();
   } catch (error) {
@@ -273,8 +308,8 @@ async function initialize() {
     csrfToken = session.csrfToken;
     await loadMenu();
     showDashboard();
-  } catch {
-    showLogin();
+  } catch (error) {
+    showLogin(error.code === "SERVICE_UNAVAILABLE" ? error.message : "");
   }
 }
 
