@@ -41,6 +41,8 @@ test("mobile admin editor uses compact cards and page-bottom actions", async () 
   assert.match(adminClient, /expandedCategories/);
   assert.match(adminStyles, /\.category-card\.is-collapsed \.category-card-body\s*\{\s*display:\s*none/);
   assert.match(adminStyles, /\.dashboard-actions\s*\{[\s\S]*?position:\s*static/);
+  assert.match(adminStyles, /\.dashboard\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\) auto/);
+  assert.match(adminStyles, /@media \(max-width: 850px\)[\s\S]*?\.dashboard\s*\{\s*display:\s*block/);
   assert.match(adminStyles, /\.category-card-header\s*\{[^}]*grid-template-columns:\s*1fr/);
   assert.match(adminStyles, /\.category-heading\s*\{[^}]*white-space:\s*normal/);
 });
