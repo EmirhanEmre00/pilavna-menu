@@ -28,7 +28,7 @@ test("static clients use Supabase instead of the unavailable local admin API", a
   assert.doesNotMatch(adminClient, /\/api\/admin/);
 });
 
-test("mobile admin editor uses compact collapsible category cards", async () => {
+test("mobile admin editor uses compact cards and page-bottom actions", async () => {
   const [admin, adminClient, adminStyles] = await Promise.all([
     source("admin.html"),
     source("admin.js"),
@@ -37,7 +37,10 @@ test("mobile admin editor uses compact collapsible category cards", async () => 
 
   assert.match(admin, /data-action="toggle-category"/);
   assert.match(admin, /class="category-card-body"/);
+  assert.ok(admin.indexOf('id="editor"') < admin.indexOf('class="dashboard-actions"'));
   assert.match(adminClient, /expandedCategories/);
   assert.match(adminStyles, /\.category-card\.is-collapsed \.category-card-body\s*\{\s*display:\s*none/);
-  assert.match(adminStyles, /\.dashboard-actions\s*\{[\s\S]*?position:\s*fixed/);
+  assert.match(adminStyles, /\.dashboard-actions\s*\{[\s\S]*?position:\s*static/);
+  assert.match(adminStyles, /\.category-card-header\s*\{[^}]*grid-template-columns:\s*1fr/);
+  assert.match(adminStyles, /\.category-heading\s*\{[^}]*white-space:\s*normal/);
 });

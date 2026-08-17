@@ -6,7 +6,7 @@
   <meta name="robots" content="noindex, nofollow">
   <title>Pilavna | Menü Yönetimi</title>
   <link rel="icon" href="images/favicon.png">
-  <link rel="stylesheet" href="admin.css?v=20260817-2">
+  <link rel="stylesheet" href="admin.css?v=20260817-4">
 </head>
 <body>
   <div class="admin-shell">
@@ -82,13 +82,6 @@
             <h1>Menü düzenleyici</h1>
             <p>Yaptığınız değişiklikler yalnızca “Değişiklikleri kaydet” düğmesine bastığınızda yayınlanır.</p>
           </div>
-          <div class="dashboard-actions">
-            <button id="logoutButton" class="ghost-button" type="button">Çıkış</button>
-            <button id="saveButton" class="primary-button save-button" type="button" disabled>
-              <span aria-hidden="true">✓</span>
-              Değişiklikleri kaydet
-            </button>
-          </div>
         </div>
 
         <div class="summary-grid" aria-label="Menü özeti">
@@ -118,6 +111,14 @@
         </div>
 
         <div id="editor" class="editor" aria-live="polite"></div>
+
+        <div class="dashboard-actions" aria-label="Yönetim işlemleri">
+          <button id="logoutButton" class="ghost-button" type="button">Çıkış</button>
+          <button id="saveButton" class="primary-button save-button" type="button" disabled>
+            <span aria-hidden="true">✓</span>
+            Değişiklikleri kaydet
+          </button>
+        </div>
       </section>
     </main>
   </div>
