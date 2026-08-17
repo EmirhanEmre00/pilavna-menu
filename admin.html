@@ -6,7 +6,7 @@
   <meta name="robots" content="noindex, nofollow">
   <title>Pilavna | Menü Yönetimi</title>
   <link rel="icon" href="images/favicon.png">
-  <link rel="stylesheet" href="admin.css">
+  <link rel="stylesheet" href="admin.css?v=20260817-2">
 </head>
 <body>
   <div class="admin-shell">
@@ -135,29 +135,32 @@
           </div>
         </div>
         <div class="row-actions" aria-label="Kategori işlemleri">
+          <button type="button" class="icon-button category-toggle" data-action="toggle-category" title="Kategori ayrıntılarını aç" aria-label="Kategori ayrıntılarını aç" aria-expanded="false">＋</button>
           <button type="button" class="icon-button" data-action="category-up" title="Yukarı taşı" aria-label="Kategoriyi yukarı taşı">↑</button>
           <button type="button" class="icon-button" data-action="category-down" title="Aşağı taşı" aria-label="Kategoriyi aşağı taşı">↓</button>
           <button type="button" class="icon-button danger" data-action="delete-category" title="Kategoriyi sil" aria-label="Kategoriyi sil">×</button>
         </div>
       </div>
 
-      <div class="category-fields">
-        <label class="field">
-          <span>Kategori adı</span>
-          <input type="text" data-field="category-name" required maxlength="80">
-        </label>
-        <label class="field">
-          <span>Menüdeki kısa adı</span>
-          <input type="text" data-field="category-short-name" required maxlength="40">
-        </label>
-      </div>
+      <div class="category-card-body">
+        <div class="category-fields">
+          <label class="field">
+            <span>Kategori adı</span>
+            <input type="text" data-field="category-name" required maxlength="80">
+          </label>
+          <label class="field">
+            <span>Menüdeki kısa adı</span>
+            <input type="text" data-field="category-short-name" required maxlength="40">
+          </label>
+        </div>
 
-      <div class="items-heading">
-        <span>Ürünler</span>
-        <button type="button" class="text-button" data-action="add-item">＋ Ürün ekle</button>
+        <div class="items-heading">
+          <span>Ürünler</span>
+          <button type="button" class="text-button" data-action="add-item">＋ Ürün ekle</button>
+        </div>
+        <div class="items-list"></div>
+        <div class="empty-products" hidden>Bu kategoride henüz ürün yok.</div>
       </div>
-      <div class="items-list"></div>
-      <div class="empty-products" hidden>Bu kategoride henüz ürün yok.</div>
     </article>
   </template>
 
@@ -190,6 +193,6 @@
 
   <noscript>Yönetim panelini kullanmak için JavaScript'i etkinleştirin.</noscript>
   <script src="supabase-config.js?v=20260817-1"></script>
-  <script src="admin.js?v=20260817-1"></script>
+  <script src="admin.js?v=20260817-2"></script>
 </body>
 </html>

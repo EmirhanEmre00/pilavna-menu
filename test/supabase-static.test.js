@@ -27,3 +27,17 @@ test("static clients use Supabase instead of the unavailable local admin API", a
   assert.match(adminClient, /rest\/v1\/menu_content/);
   assert.doesNotMatch(adminClient, /\/api\/admin/);
 });
+
+test("mobile admin editor uses compact collapsible category cards", async () => {
+  const [admin, adminClient, adminStyles] = await Promise.all([
+    source("admin.html"),
+    source("admin.js"),
+    source("admin.css"),
+  ]);
+
+  assert.match(admin, /data-action="toggle-category"/);
+  assert.match(admin, /class="category-card-body"/);
+  assert.match(adminClient, /expandedCategories/);
+  assert.match(adminStyles, /\.category-card\.is-collapsed \.category-card-body\s*\{\s*display:\s*none/);
+  assert.match(adminStyles, /\.dashboard-actions\s*\{[\s\S]*?position:\s*fixed/);
+});
